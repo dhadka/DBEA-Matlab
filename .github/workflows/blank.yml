@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
+      - name: Run test.m
+        run: matlab -batch test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: content
+          path: .
